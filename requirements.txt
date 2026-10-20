@@ -54,7 +54,7 @@ llvmlite==0.43.0
 MarkupSafe==3.0.1
 matplotlib==3.9.2
 matplotlib-inline==0.1.7
-mir_eval==0.7
+mir_eval==0.8.2
 mistune==3.0.2
 msgpack==1.1.0
 nbclient==0.10.0
