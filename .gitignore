@@ -163,3 +163,6 @@ cython_debug/
 
 # Others
 tmp.wav
+compare.png
+sonified_beats_gt.wav
+sonified_beats_pred.wav

@@ -126,7 +126,7 @@ class BeatActivation:
 class Tempogram:
     """Tempogram from Beat Activation Input"""
 
-    N_time: int = 6  # window size given as time in seconds
+    N_time: int = 3  # window size given as time in seconds
     framerate: float = 0
     Theta: np.ndarray = field(default_factory=lambda: np.arange(60, 181, 1))
     H: int = field(default=1, repr=False)  # hop size (default=1 computing every frame)
@@ -232,7 +232,7 @@ class Kernel:
 class PredominantLocalPulse:
     """Real-Time Predominant Local Pulse with Tempo Inertia and Silence Gating."""
 
-    N_time: int = 6
+    N_time: int = 3
     framerate: float = 0
     Theta: np.ndarray = field(default_factory=lambda: np.arange(60, 181, 1))
     lookahead: int = 0
@@ -243,7 +243,7 @@ class PredominantLocalPulse:
     conf_threshold: float = 2.0
     # Hysteresis: a challenger tempo bin must exceed the current tempo bin's
     # magnitude by this factor before the tempo is allowed to switch.
-    switch_ratio: float = 1.25
+    switch_ratio: float = 1.05
 
     stability: float = field(default=0, init=False, repr=False)
     current_tempo: float = field(default=0, init=False, repr=False)
@@ -596,13 +596,13 @@ class RealTimeBeatTracker:
         N=1024,
         H=512,
         samplerate=48000,
-        N_time=6,
+        N_time=3,
         Theta=np.arange(60, 181, 1),
         lookahead=0,
         silence_db=-50.0,
         hold_frames=15,
         conf_threshold=2.0,
-        switch_ratio=1.25,
+        switch_ratio=1.05,
     ):
         """Create Beat Tracker for Real-Time"""
         act = BeatActivation(N=N, H=H, samplerate=samplerate)

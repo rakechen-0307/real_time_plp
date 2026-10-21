@@ -1576,6 +1576,7 @@ dependencies = [
     { name = "threadpoolctl" },
     { name = "tinycss2" },
     { name = "tornado" },
+    { name = "tqdm" },
     { name = "traitlets" },
     { name = "types-python-dateutil" },
     { name = "typing-extensions" },
@@ -1701,6 +1702,7 @@ requires-dist = [
     { name = "threadpoolctl", specifier = "==3.5.0" },
     { name = "tinycss2", specifier = "==1.3.0" },
     { name = "tornado", specifier = "==6.4.1" },
+    { name = "tqdm", specifier = ">=4.70.1" },
     { name = "traitlets", specifier = "==5.14.3" },
     { name = "types-python-dateutil", specifier = "==2.9.0.20241003" },
     { name = "typing-extensions", specifier = "==4.12.2" },
@@ -2019,6 +2021,18 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/94/d4/f8ac1f5bd22c15fad3b527e025ce219bd526acdbd903f52053df2baecc8b/tornado-6.4.1-cp38-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:a02a08cc7a9314b006f653ce40483b9b3c12cda222d6a46d4ac63bb6c9057698", size = 436882, upload-time = "2024-06-06T18:36:24.124Z" },
     { url = "https://files.pythonhosted.org/packages/4b/3e/a8124c21cc0bbf144d7903d2a0cadab15cadaf683fa39a0f92bc567f0d4d/tornado-6.4.1-cp38-abi3-win32.whl", hash = "sha256:d9a566c40b89757c9aa8e6f032bcdb8ca8795d7c1a9762910c722b1635c9de4d", size = 438092, upload-time = "2024-06-06T18:36:25.881Z" },
     { url = "https://files.pythonhosted.org/packages/d9/2f/3f2f05e84a7aff787a96d5fb06821323feb370fe0baed4db6ea7b1088f32/tornado-6.4.1-cp38-abi3-win_amd64.whl", hash = "sha256:b24b8982ed444378d7f21d563f4180a2de31ced9d8d84443907a0a64da2072e7", size = 438532, upload-time = "2024-06-06T18:36:28.494Z" },
+]
+
+[[package]]
+name = "tqdm"
+version = "4.70.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/0d/ea/b2a5bd54b28a324dae8211928b2d730b6547500342c7e6c6dea08bd0a485/tqdm-4.70.1.tar.gz", hash = "sha256:cefd0eca11b2a37a3aee776544d4f4ae913f02688135b5556b8788dfa474afc4", size = 171846, upload-time = "2026-09-11T07:25:16.601Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a7/03/921a3d3c75785aca9ebfbfcabfbc3a1be12e2ab5265deb026d55a5a3f83e/tqdm-4.70.1-py3-none-any.whl", hash = "sha256:c293e525e6fef9c20e8728fd4612df02a0aa31bb5fe91ecd93e123b1b7bffa73", size = 80199, upload-time = "2026-09-11T07:25:14.599Z" },
 ]
 
 [[package]]
