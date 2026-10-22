@@ -243,7 +243,7 @@ class PredominantLocalPulse:
     conf_threshold: float = 2.0
     # Hysteresis: a challenger tempo bin must exceed the current tempo bin's
     # magnitude by this factor before the tempo is allowed to switch.
-    switch_ratio: float = 1.05
+    switch_ratio: float = 1.25
 
     stability: float = field(default=0, init=False, repr=False)
     current_tempo: float = field(default=0, init=False, repr=False)
@@ -566,7 +566,7 @@ class RealTimeBeatTracker:
 
     # Input level gate: "is there sound right now?"
     silence_db: float = -50.0  # RMS level (dBFS) below which a frame counts as silent
-    hold_frames: int = 15  # keep the gate open this many frames after the last loud one
+    hold_frames: int = 30  # keep the gate open this many frames after the last loud one
 
     _hold: int = field(default=0, init=False, repr=False)
     last_rms_db: float = field(default=-120.0, init=False, repr=False)
@@ -600,9 +600,9 @@ class RealTimeBeatTracker:
         Theta=np.arange(60, 181, 1),
         lookahead=0,
         silence_db=-50.0,
-        hold_frames=15,
+        hold_frames=30,
         conf_threshold=2.0,
-        switch_ratio=1.05,
+        switch_ratio=1.25,
     ):
         """Create Beat Tracker for Real-Time"""
         act = BeatActivation(N=N, H=H, samplerate=samplerate)
