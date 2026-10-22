@@ -8,7 +8,7 @@ from tqdm import tqdm
 from realtimeplp_new import RealTimeBeatTracker, BeatAnalyzer
 
 # === Configurations ===
-DATA_PATH = pathlib.Path("/data/ssd0/rakec/slakh2100/processed/test")
+DATA_PATH = pathlib.Path("/data/ssd0/rakec/moisesdb/processed/test")
 OUT_DIR = pathlib.Path("/data/hdd0/rakec/test/realtimeplp_eval")
 OUT_DIR.mkdir(exist_ok=True, parents=True)
 
