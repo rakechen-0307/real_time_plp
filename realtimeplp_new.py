@@ -126,7 +126,7 @@ class BeatActivation:
 class Tempogram:
     """Tempogram from Beat Activation Input"""
 
-    N_time: int = 3  # window size given as time in seconds
+    N_time: int = 6  # window size given as time in seconds
     framerate: float = 0
     Theta: np.ndarray = field(default_factory=lambda: np.arange(60, 181, 1))
     H: int = field(default=1, repr=False)  # hop size (default=1 computing every frame)
@@ -232,7 +232,7 @@ class Kernel:
 class PredominantLocalPulse:
     """Real-Time Predominant Local Pulse with Tempo Inertia and Silence Gating."""
 
-    N_time: int = 3
+    N_time: int = 6
     framerate: float = 0
     Theta: np.ndarray = field(default_factory=lambda: np.arange(60, 181, 1))
     lookahead: int = 0
@@ -596,7 +596,7 @@ class RealTimeBeatTracker:
         N=1024,
         H=512,
         samplerate=48000,
-        N_time=3,
+        N_time=6,
         Theta=np.arange(60, 181, 1),
         lookahead=0,
         silence_db=-50.0,
