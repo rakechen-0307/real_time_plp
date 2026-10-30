@@ -60,14 +60,15 @@ DURATION_SEC = 30
 STRIDE_SEC = 15
 TRIM_SEC = 5.0              # ignore the first seconds of each track (tracker warm-up; same as mir_eval's default)
 LAG_MAX_FRAMES = 6          # lag search range for the feature correlation (+-6 frames = +-200 ms at 30 fps)
-N_PLOT_WORST = 30
-N_PLOT_RANDOM = 20
+N_PLOT_WORST = 50
+N_PLOT_BEST = 50
+N_PLOT_RANDOM = 100
 
 # Identical defaults to pre_encode.py (DEFAULT_BEAT_CFG); overridden by the yaml's `beat:` section
 DEFAULT_BEAT_CFG = {
     "low_bpm": 90,
     "high_bpm": 180,
-    "lookahead": 0,
+    "lookahead": 7,
     "silence_db": -50.0,
     "hold_frames": 30,
     "conf_threshold": 2.0,
@@ -513,12 +514,14 @@ def render_window(row, cfg, tag, rank):
     plt.close(fig)
 
     # Click track: GT = high click (1800 Hz), tracker = low click (900 Hz)
-    c_gt = librosa.clicks(times=gt_in - t0, sr=sr, length=len(crop), click_freq=1800.0, click_duration=0.05)
+    c_gt = librosa.clicks(times=gt_in - t0, sr=sr, length=len(crop), click_freq=900.0, click_duration=0.05)
     c_pr = librosa.clicks(times=pk_in - t0, sr=sr, length=len(crop), click_freq=900.0, click_duration=0.05)
-    mix = crop * 0.7 + 0.5 * c_gt + 0.5 * c_pr
-    mix = mix / max(1.0, float(np.abs(mix).max()))
-    sf.write(OUT_DIR / "plots" / f"{base}.wav", mix.astype(np.float32), sr)
-
+    mix_gt = crop + 0.5 * c_gt
+    mix_pr = crop + 0.5 * c_pr
+    mix_gt = mix_gt / max(1.0, float(np.abs(mix_gt).max()))
+    mix_pr = mix_pr / max(1.0, float(np.abs(mix_pr).max()))
+    sf.write(OUT_DIR / "plots" / f"{base}_gt.wav", mix_gt.astype(np.float32), sr)
+    sf.write(OUT_DIR / "plots" / f"{base}_pr.wav", mix_pr.astype(np.float32), sr)
 
 def main():
     args = parse_args()
@@ -588,13 +591,13 @@ def main():
     if not args.no_render and len(win):
         w = win.dropna(subset=["pk_F"]).sort_values(["pk_F", "feat_corr_best"])
         worst = w.head(N_PLOT_WORST)
-        rand = w.drop(worst.index).sample(min(N_PLOT_RANDOM, max(len(w) - len(worst), 0)), random_state=0) \
-            if len(w) > len(worst) else w.iloc[0:0]
-        for tag, df in (("worst", worst), ("random", rand)):
+        best = w.tail(N_PLOT_BEST).iloc[::-1]
+        pool = w.drop(worst.index).drop(best.index, errors="ignore")
+        rand = pool.sample(min(N_PLOT_RANDOM, len(pool)), random_state=0) if len(pool) > 0 else w.iloc[0:0]
+        for tag, df in (("best", best), ("worst", worst), ("random", rand)):
             for rank, (_, r) in enumerate(tqdm(df.iterrows(), total=len(df), desc=f"render {tag}", ncols=140)):
                 render_window(r, cfg, tag, rank)
         print(f"[INFO] Plots and click tracks saved to {OUT_DIR / 'plots'}")
-
 
 if __name__ == "__main__":
     main()
